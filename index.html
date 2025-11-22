@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportinx - أخبار كرة القدم العالمية</title>
+    <style>
+        /* التصميم العام */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #1a73e8;
+            --secondary: #e94235;
+            --dark: #1e1e1e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 120px; /* تعويض الهيدر الثابت */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* الهيدر */
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #333 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 900;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 22px;
+            margin: 0 10px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .social-links a:hover:nth-child(1) {
+            color: #1877F2; /* Facebook */
+        }
+
+        .social-links a:hover:nth-child(2) {
+            color: #000000; /* X (Twitter) */
+        }
+
+        .social-links a:hover:nth-child(3) {
+            background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .social-links a:hover:nth-child(4) {
+            color: #FF0000; /* YouTube */
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li {
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a:hover, nav ul li a.active {
+            background-color: var(--primary);
+        }
+        
+        /* القائمة الجانبية */
+        .sidebar-toggle {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.3s;
+        }
+        
+        .sidebar-toggle:hover {
+            background: #0d5bb9;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -260px;
+            width: 260px;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .sidebar-menu h3 {
+            color: var(--dark);
+            margin: 20px 0 10px;
+            font-size: 18px;
+        }
+        
+        .sidebar-links {
+            list-style: none;
+        }
+        
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-links a {
+            color: var(--dark);
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+        
+        .sidebar-links a:hover {
+            color: var(--primary);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* البانر الرئيسي */
+        .hero { 
+            background: url('https://images4.alphacoders.com/657/657646.jpg') no-repeat center center;
+            background-size: cover;
+            height: 400px;
+            position: relative;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+        }       
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        
+        .hero-content {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            color: white;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .hero-content h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0d5bb9;
+        }
+        
+        /* الأقسام الرئيسية */
+        .section-title {
+            font-size: 24px;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+        
+        /* الأخبار العاجلة */
+        .breaking-news {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 0;
+            margin-bottom: 30px;
+        }
+        
+        .breaking-news-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .breaking-label {
+            background-color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 4px;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+        
+        /* الشبكة */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-category {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        /* الفوتر */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* أيقونات الدوري */
+        .league-icon {
+            width: 22px;
+            height: 22px;
+            margin-left: 8px;
+        }
+        
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 992px) {
+            nav ul li {
+                margin-left: 10px;
+            }
+            
+            .hero-content h2 {
+                font-size: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding-top: 150px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .social-links {
+                margin: 10px 0;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .hero {
+                height: 300px;
+            }
+            
+            .hero-content {
+                right: 20px;
+                bottom: 20px;
+                left: 20px;
+            }
+            
+            .hero-content h2 {
+                font-size: 24px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .sidebar-toggle {
+                top: 120px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- زر القائمة الجانبية -->
+    <button class="sidebar-toggle">☰ القائمة</button>
+    
+    <!-- القائمة الجانبية -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Sportinx</h2>
+            <p>القائمة الرئيسية</p>
+        </div>
+        <div class="sidebar-menu">
+            <h3>روابط سريعة</h3>
+            <ul class="sidebar-links">
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> مواعيد المباريات</a></li>
+                <li><a href="#"><i class="fas fa-trophy"></i> الترتيب</a></li>
+                <li><a href="#"><i class="fas fa-futbol"></i> الهدافين</a></li>
+                <li><a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fas fa-video"></i> البث المباشر</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- طبقة التعتيم -->
+    <div class="overlay"></div>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>Sport<span>inx</span></h1>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <nav>
+                <ul class="leagues-list">
+                    <!-- الرئيسية -->
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-house"></i>
+                            الرئيسية
+                        </a>
+                    </li>
+
+                    <!-- الدوري الإنجليزي الممتاز (Premier League) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <path d="M20 10c10-12 30-5 30 10s-15 25-25 25S5 35 5 25s5-12 15-15z" stroke-width="4" fill="none" stroke="white"/>
+                                <circle cx="32" cy="45" r="8" stroke="white" stroke-width="4" fill="none"/>
+                            </svg>
+                            الدوري الإنجليزي
+                        </a>
+                    </li>
+
+                    <!-- الدوري الإسباني (La Liga) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <circle cx="32" cy="32" r="20" fill="none" stroke="white" stroke-width="4"/>
+                                <path d="M32 12v10M32 52V42M12 32h10M52 32H42M18 18l8 8M46 46l-8-8M46 18l-8 8M18 46l8-8"
+                                      stroke="white" stroke-width="4"/>
+                            </svg>
+                            الدوري الإسباني
+                        </a>
+                    </li>
+
+                    <!-- الدوري الإيطالي (Serie A) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <polygon points="32 6 52 18 52 46 32 58 12 46 12 18" fill="none" stroke="white" stroke-width="4"/>
+                                <polygon points="32 14 44 22 44 42 32 50 20 42 20 22" fill="none" stroke="white" stroke-width="3"/>
+                            </svg>
+                            الدوري الإيطالي
+                        </a>
+                    </li>
+
+                    <!-- الدوري الألماني (Bundesliga) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <rect x="8" y="20" width="48" height="28" rx="4" ry="4" fill="none" stroke="white" stroke-width="4"/>
+                                <path d="M20 42l6-10-6-10 18 10-18 10z" stroke="white" stroke-width="4" fill="none"/>
+                            </svg>
+                            الدوري الألماني
+                        </a>
+                    </li>
+
+                    <!-- الدوري الفرنسي (Ligue 1) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <circle cx="32" cy="32" r="18" fill="none" stroke="white" stroke-width="4"/>
+                                <circle cx="32" cy="32" r="6" fill="none" stroke="white" stroke-width="4"/>
+                            </svg>
+                            الدوري الفرنسي
+                        </a>
+                    </li>
+
+                    <!-- دوري أبطال أوروبا (UEFA Champions League) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <circle cx="32" cy="32" r="22" fill="none" stroke="white" stroke-width="3"/>
+                                <path d="M32 12l6 10h12l-8 6 4 10-10-6-10 6 4-10-8-6h12z"
+                                      fill="none" stroke="white" stroke-width="3"/>
+                            </svg>
+                            دوري الأبطال
+                        </a>
+                    </li>
+
+                    <!-- الدوري السعودي (SPL) -->
+                    <li>
+                        <a href="#">
+                            <svg viewBox="0 0 64 64" class="league-icon">
+                                <circle cx="32" cy="32" r="20" fill="none" stroke="white" stroke-width="3"/>
+                                <path d="M32 12v8M32 44v8M12 32h8M44 32h8M18 18l6 6M40 40l6 6M18 46l6-6M40 24l6-6"
+                                      stroke="white" stroke-width="3"/>
+                            </svg>
+                            الدوري السعودي
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- البانر الرئيسي -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>أخبار كرة القدم العالمية لحظة بلحظة</h2>
+            <p>تغطية شاملة لأهم الأحداث والبطولات في عالم كرة القدم مع تحليلات مفصلة وأخبار حصرية</p>
+            <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA=" class="btn">تابع المباريات مباشر</a>
+        </div>
+    </section>
+
+    <!-- الأخبار العاجلة -->
+    <section class="breaking-news">
+        <div class="container">
+            <div class="breaking-news-content">
+                <span class="breaking-label">عاجل</span>
+                <p>ريال مدريد يتأهل إلى نصف نهائي دوري الأبطال بعد فوزه على بايرن ميونخ</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <h2 class="section-title">آخر أخبار كرة القدم</h2>
+        
+        <div class="grid">
+            <!-- خبر 1 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://static.vecteezy.com/system/resources/previews/015/863/725/original/england-premier-league-logo-on-transparent-background-free-vector.jpg" alt="الدوري الإنجليزي">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">الدوري الإنجليزي</span>
+                    <h3 class="card-title">أرسنال يتغلب على تشيلسي في ديربي لندن ويقترب من الصدارة</h3>
+                    <p>فوز ثمين لأرسنال على منافسه التقليدي تشيلسي في ديربي لندن الذي جمعهما على ملعب الإمارات.</p>
+                    <div class="card-meta">
+                        <span>قبل 3 ساعات</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- خبر 2 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/9/9b/Saudi_Professional_League_Logo.svg/1200px-Saudi_Professional_League_Logo.svg.png" alt="الدوري السعودي">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">الدوري السعودي</span>
+                    <h3 class="card-title">الهلال يحقق الفوز في ديربي الرياض أمام النصر</h3>
+                    <p>فوز كبير للهلال على النصر في ديربي الرياض بثلاثية نظيفة في الجولة 25 من دوري روشن.</p>
+                    <div class="card-meta">
+                        <span>قبل 5 ساعات</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- خبر 3 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://images2.imgbox.com/57/3f/6FvX6c6d_o.jpg" alt="الدوري الإسباني">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">الدوري الإسباني</span>
+                    <h3 class="card-title">برشلونة يعود للفوز بعد تعثره أمام فالنسيا</h3>
+                    <p>فوز مهم لبرشلونة على فالنسيا في الكامب نو بعد سلسلة من النتائج المخيبة للآمال.</p>
+                    <div class="card-meta">
+                        <span>قبل 7 ساعات</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2 class="section-title">أهم البطولات</h2>
+        
+        <div class="grid">
+            <!-- بطولة 1 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://editorial.uefa.com/resources/0296-1d21e9bdf7e2-d68c311c8aed-1000/lowres_3_.jpeg" alt="دوري الأبطال">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">دوري الأبطال</span>
+                    <h3 class="card-title">مواعيد مباريات نصف نهائي دوري الأبطال 2023</h3>
+                    <p>تعرف على مواعيد مباريات نصف نهائي دوري أبطال أوروبا والمواجهات المنتظرة.</p>
+                    <div class="card-meta">
+                        <span>قبل يومين</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- بطولة 2 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://i.pinimg.com/1200x/a4/8c/db/a48cdb05efbf9cacb48d82fad15dc785.jpg" alt="كأس العالم">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">كأس العالم 2026</span>
+                    <h3 class="card-title">المتحضيرات جارية لاستضافة كأس العالم 2026</h3>
+                    <p>التحضيرات تتسارع في أمريكا الشمالية لاستضافة نسخة 2026 من بطولة كأس العالم.</p>
+                    <div class="card-meta">
+                        <span>قبل 4 أيام</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- بطولة 3 -->
+            <div class="card">
+                <div class="card-img">
+                    <img src="https://i.pinimg.com/1200x/f6/15/e0/f615e043c14c233b53ab5647e10dd807.jpg" alt="كأس امم افريقيا">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">كأس امم افريقيا</span>
+                    <h3 class="card-title">منافسة شرسة على لقب دوري روشن للمحترفين</h3>
+                    <p>منافسة قوية بين الأندية السعودية على لقب الدوري مع اقتراب الموسم من نهايته.</p>
+                    <div class="card-meta">
+                        <span>قبل 6 أيام</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sportinx</h3>
+                    <p>الموقع الرياضي الأول الذي يقدم لك آخر أخبار كرة القدم والتحليلات من حول العالم.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> الرئيسية</a></li>
+                        <li><a href="about.html"><i class="fas fa-info-circle"></i> من نحن</a></li>
+                        <li><a href="contact.html"><i class="fas fa-envelope"></i> اتصل بنا</a></li>
+                        <li><a href="terms.html"><i class="fas fa-file-contract"></i> شروط الاستخدام</a></li>
+                        <li><a href="privacy.html"><i class="fas fa-shield-alt"></i> سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>البطولات</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">الدوري الإنجليزي</a></li>
+                        <li><a href="#">الدوري الإسباني</a></li>
+                        <li><a href="#">الدوري الإيطالي</a></li>
+                        <li><a href="#">الدوري الالماني</a></li>
+                        <li><a href="#">دوري الأبطال</a></li>
+                        <li><a href="#">الدوري السعودي</a></li>
+                        <li><a href="#">كأس العالم</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>تابعنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-facebook-f"></i> فيسبوك</a></li>
+                        <li><a href="#"><i class="fab fa-x-twitter"></i> تويتر</a></li>
+                        <li><a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fab fa-instagram"></i> إنستغرام</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> يوتيوب</a></li>
+                        <li><a href="#"><i class="fab fa-tiktok"></i> تيك توك</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2025 Sportinx</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript لتفعيل القائمة الجانبية
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
