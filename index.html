@@ -38,9 +38,8 @@
         
         /* الهيدر */
         header {
-            background: linear-gradient(135deg, var(--dark) 0%, #333 100%);
+            background:white 100%;
             color: white;
-            padding: 15px 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: fixed;
             top: 0;
@@ -50,12 +49,13 @@
         }
         
         .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+    display: flex;
+    justify-content: start; /* قرب العناصر */
+    align-items: center;
+    gap: 70px; /* مسافة صغيرة فقط */
+    padding-bottom: 15px;
+}
+
         
         .logo {
             display: flex;
@@ -66,7 +66,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-left: 10px;
-            background: linear-gradient(90deg, #fbfafa, #1a73e8);
+            background: linear-gradient(90deg, #0f0d0d, #1a73e8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -79,13 +79,13 @@
         .quick-links {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 35px;
+            margin-right: -40px;
         }
         
         .quick-links a {
-            color: white;
+            color:#0d5bb9;
             text-decoration: none;
-            font-size: 14px;
             transition: color 0.3s;
             display: flex;
             align-items: center;
@@ -94,58 +94,30 @@
             border-radius: 4px;
         }
         
-        .quick-links a:hover {
+        .quick-links a:hover 
+        {
             background-color: rgba(255, 255, 255, 0.1);
         }
         
-        .social-links a {
-            color: white;
-            font-size: 22px;
-            margin: 0 10px;
-            transition: 0.3s;
-            display: inline-block;
-        }
+       .sidebar-toggle {
+    position: fixed;
+    top: 7px;
+    right: 1340px;
+    z-index: 1000;
+    background: none;
+    border: none;
+    font-size: 17px;
+    color:#0d5bb9;
+    cursor: pointer;
+    padding: 2px;
 
-        .social-links a:hover:nth-child(1) {
-            color: #1877F2; /* Facebook */
-        }
-
-        .social-links a:hover:nth-child(2) {
-            color: #000000; /* X (Twitter) */
-        }
-
-        .social-links a:hover:nth-child(3) {
-            background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .social-links a:hover:nth-child(4) {
-            color: #FF0000; /* YouTube */
-        }
-        
-        /* القائمة الجانبية */
-        .sidebar-toggle {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            padding: 10px 12px;
-            cursor: pointer;
-            font-size: 15px;
-            transition: background 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        
-        .sidebar-toggle:hover {
-            background: #0d5bb9;
-        }
+    /* هنا كتتحكم فالغِلاظَة */
+    text-shadow:
+        1px 0 #0d5bb9,
+        -1px 0 #0d5bb9,
+        0 1px #0d5bb9,
+        0 -1px #0d5bb9;
+}
         
         .sidebar {
             position: fixed;
@@ -246,9 +218,7 @@
             background-size: cover;
             height: 300px;
             position: relative;
-            margin-bottom: 30px;
             border-radius: 0 0 10px 10px;
-            overflow: hidden;
         }       
         
         .hero::after {
@@ -391,7 +361,7 @@
         
         /* الفوتر */
         footer {
-            background-color: var(--dark);
+            background-color: #0d5bb9;
             color: white;
             padding: 40px 0 20px;
             margin-top: 50px;
@@ -420,7 +390,7 @@
         }
         
         .footer-links a {
-            color: #ccc;
+            color: white;
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -433,7 +403,7 @@
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(255,255,255,0.1);
-            color: #aaa;
+            color: white;
             font-size: 14px;
         }
         
@@ -519,8 +489,8 @@
 </head>
 <body>
     <!-- زر القائمة الجانبية -->
-    <button class="sidebar-toggle">☰ القائمة</button>
-    
+    <button class="sidebar-toggle">☰</button>
+
     <!-- القائمة الجانبية -->
     <div class="sidebar">
         <div class="sidebar-header">
@@ -610,14 +580,6 @@
                     </a>
                 </li>
             </ul>
-            
-            <h3>روابط سريعة</h3>
-            <ul class="sidebar-links">
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> مواعيد المباريات</a></li>
-                <li><a href="#"><i class="fas fa-trophy"></i> الترتيب</a></li>
-                <li><a href="#"><i class="fas fa-futbol"></i> الهدافين</a></li>
-                <li><a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fas fa-video"></i> البث المباشر</a></li>
-            </ul>
         </div>
     </div>
     
@@ -636,12 +598,6 @@
                     <a href="#"><i class="fas fa-trophy"></i> الترتيب</a>
                     <a href="#"><i class="fas fa-futbol"></i> الهدافين</a>
                     <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fas fa-video"></i> البث المباشر</a>
-                </div>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
@@ -844,5 +800,29 @@
             });
         });
     </script>
+    <script>
+    const searchToggleIcon = document.getElementById("searchToggleIcon");
+    const searchBox = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+
+    let searchOpen = false;
+
+    searchToggleIcon.addEventListener("click", () => {
+        searchOpen = !searchOpen;
+
+        if (searchOpen) {
+            // فتح البحث
+            searchBox.style.display = "block";
+            searchBox.focus();
+            searchToggleIcon.innerHTML = '<i class="fas fa-times"></i>'; // ❌
+        } else {
+            // غلق البحث
+            searchBox.style.display = "none";
+            searchBox.value = "";
+            searchResults.style.display = "none";
+            searchToggleIcon.innerHTML = '<i class="fas fa-search"></i>'; // 🔍
+        }
+    });
+</script>
 </body>
 </html>
