@@ -489,10 +489,24 @@
             margin-left: 8px;
         }
         
-        /* التجاوب مع الشاشات المختلفة */
+        /* التجاوب مع الشاشات المختلفة - تحسينات للهواتف */
+        @media (max-width: 1200px) {
+            .quick-links {
+                gap: 25px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .hero-content h2 {
                 font-size: 30px;
+            }
+            
+            .header-top {
+                gap: 40px;
+            }
+            
+            .quick-links {
+                gap: 20px;
             }
         }
         
@@ -504,16 +518,28 @@
             .header-top {
                 flex-direction: column;
                 text-align: center;
+                gap: 15px;
             }
             
             .logo {
-                margin-bottom: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
             }
             
             .quick-links {
                 margin: 10px 0;
                 justify-content: center;
                 flex-wrap: wrap;
+                gap: 15px;
+                margin-right: 0;
+            }
+            
+            .quick-links a {
+                font-size: 14px;
+                padding: 6px 10px;
             }
             
             .header-search {
@@ -525,10 +551,6 @@
             
             .header-search.active input {
                 width: 80%;
-            }
-            
-            .social-links {
-                margin: 10px 0;
             }
             
             .hero {
@@ -552,9 +574,52 @@
             .header-left {
                 top: 100px;
             }
+            
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .card-img {
+                height: 160px;
+            }
+            
+            .card-content {
+                padding: 15px;
+            }
+            
+            .card-title {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 22px;
+            }
+            
+            .breaking-news-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .breaking-label {
+                margin-left: 0;
+            }
+            
+            .sidebar {
+                width: 280px;
+            }
+            
+            .header-search.active input {
+                width: 90%;
+            }
         }
         
         @media (max-width: 576px) {
+            body {
+                padding-top: 140px;
+            }
+            
             .grid {
                 grid-template-columns: 1fr;
             }
@@ -565,14 +630,109 @@
             
             .quick-links {
                 display: flex;
+                gap: 10px;
+            }
+            
+            .quick-links a {
+                font-size: 13px;
+                padding: 5px 8px;
+            }
+            
+            .hero {
+                height: 200px;
+            }
+            
+            .hero-content {
+                bottom: 15px;
+                right: 15px;
+                left: 15px;
+            }
+            
+            .hero-content h2 {
+                font-size: 20px;
+            }
+            
+            .hero-content p {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .header-left {
+                top: 110px;
+                left: 15px;
+            }
+            
+            .sidebar-toggle {
+                left: 180px;
+                font-size: 16px;
+            }
+            
+            .header-search {
+                margin-right: 10px;
+            }
+            
+            .card-img {
+                height: 140px;
+            }
+            
+            .card-content {
+                padding: 12px;
+            }
+            
+            .card-title {
+                font-size: 15px;
+            }
+            
+            .card-meta {
+                font-size: 12px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .breaking-news {
+                padding: 8px 0;
+            }
+            
+            .breaking-news p {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo h1 {
+                font-size: 22px;
+            }
+            
+            .quick-links a {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+            
+            .hero-content h2 {
+                font-size: 18px;
+            }
+            
+            .hero-content p {
+                font-size: 13px;
             }
             
             .sidebar {
-                width: 280px;
+                width: 260px;
             }
             
-            .header-search.active input {
-                width: 90%;
+            .header-left {
+                left: 10px;
+            }
+            
+            .sidebar-toggle {
+                left: 160px;
             }
         }
     </style>
