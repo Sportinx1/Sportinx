@@ -20,16 +20,6 @@
             --dark: #1e1e1e;
             --light: #f8f9fa;
             --gray: #6c757d;
-            
-            /* متغيرات للتحكم في موقع البحث - يمكنك تغييرها */
-            --search-position-left: 20px;  /* تحريك البحث يميناً بزيادة القيمة */
-            --search-position-top: 7px;    /* تحريك البحث لأعلى أو أسفل */
-            --search-gap: 210px;           /* المسافة بين البحث والثلاثة شرطات */
-            
-            /* متغيرات جديدة للتحكم في موقع الثلاثة شرطات - يمكنك تغييرها */
-            --sidebar-toggle-left: 205px;   /* تحريك الشرطات يميناً بزيادة القيمة */
-            --sidebar-toggle-top: -2px;    /* تحريك الشرطات لأعلى أو أسفل */
-            --sidebar-toggle-margin: 0;    /* هامش إضافي للشرطات */
         }
         
         body {
@@ -48,7 +38,7 @@
         
         /* الهيدر */
         header {
-            background:white 100%;
+            background: white;
             color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: fixed;
@@ -60,18 +50,56 @@
         
         .header-top {
             display: flex;
-            justify-content: start; /* قرب العناصر */
+            justify-content: space-between;
             align-items: center;
-            gap: 70px; /* مسافة صغيرة فقط */
-            padding-bottom: 15px;
+            padding: 15px 0;
         }
 
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-left: 10px;
+            background: linear-gradient(90deg, #0f0d0d, #1a73e8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .quick-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+        
+        .quick-links a {
+            color: #0d5bb9;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .quick-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
         /* البحث في الهيدر */
         .header-search {
             display: flex;
             align-items: center;
             position: relative;
-            margin-right: 20px;
         }
         
         .header-search input {
@@ -115,95 +143,33 @@
             color: var(--primary);
         }
         
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-left: 10px;
-            background: linear-gradient(90deg, #0f0d0d, #1a73e8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .logo span {
-            color: var(--primary);
-        }
-        
-        .quick-links {
-            display: flex;
-            align-items: center;
-            gap: 35px;
-            margin-right: -40px;
-        }
-        
-        .quick-links a {
-            color:#0d5bb9;
-            text-decoration: none;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-        
-        .quick-links a:hover 
-        {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* زر القائمة الجانبية وزر البحث معاً */
-        .header-left {
-            position: fixed;
-            top: var(--search-position-top); /* استخدام المتغير للتحكم في الموقع */
-            left: var(--search-position-left); /* استخدام المتغير للتحكم في الموقع */
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: var(--search-gap); /* استخدام المتغير للتحكم في المسافة */
-        }
-        
         .sidebar-toggle {
             background: none;
             border: none;
-            font-size: 17px;
-            color:#0d5bb9;
+            font-size: 20px;
+            color: #0d5bb9;
             cursor: pointer;
-            padding: 2px;
-            text-shadow:
-                1px 0 #0d5bb9,
-                -1px 0 #0d5bb9,
-                0 1px #0d5bb9,
-                0 -1px #0d5bb9;
+            padding: 8px;
             transition: all 0.3s ease;
-            
-            /* استخدام المتغيرات الجديدة للتحكم في موقع الشرطات */
-            position: relative;
-            left: var(--sidebar-toggle-left);
-            top: var(--sidebar-toggle-top);
-            margin: var(--sidebar-toggle-margin);
+            margin-right: 10px;
         }
         
-        .header-search.active ~ .sidebar-toggle {
-            opacity: 0;
-            visibility: hidden;
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
         .sidebar {
             position: fixed;
             top: 0;
-            left: -300px; /* تغيير من right إلى left */
+            left: -300px;
             width: 300px;
             height: 100%;
             background: #fff;
             z-index: 9999;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1); /* تغيير اتجاه الظل */
-            transition: left 0.3s ease; /* تغيير من right إلى left */
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
             overflow-y: auto;
             padding: 20px;
             display: flex;
@@ -211,7 +177,7 @@
         }
         
         .sidebar.active {
-            left: 0; /* تغيير من right إلى left */
+            left: 0;
         }
         
         .sidebar-header {
@@ -269,7 +235,7 @@
         .sidebar-links a:hover {
             background-color: #f0f7ff;
             color: var(--primary);
-            transform: translateX(5px); /* تغيير الاتجاه */
+            transform: translateX(5px);
         }
         
         .overlay {
@@ -489,40 +455,48 @@
             margin-left: 8px;
         }
         
-        /* التجاوب مع الشاشات المختلفة - تحسينات للهواتف */
-        @media (max-width: 1200px) {
-            .quick-links {
-                gap: 25px;
-            }
+        /* روابط الهاتف في الأسفل */
+        .mobile-links {
+            display: none;
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 800;
         }
         
-        @media (max-width: 992px) {
-            .hero-content h2 {
-                font-size: 30px;
-            }
-            
-            .header-top {
-                gap: 40px;
-            }
-            
-            .quick-links {
-                gap: 20px;
-            }
+        .mobile-links-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
         
+        .mobile-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #0d5bb9;
+            font-size: 12px;
+            gap: 5px;
+        }
+        
+        .mobile-link i {
+            font-size: 18px;
+        }
+        
+        /* التجاوب مع الشاشات المختلفة - تحسينات للهواتف فقط */
         @media (max-width: 768px) {
             body {
-                padding-top: 130px;
+                padding-top: 80px;
+                padding-bottom: 70px; /* تعويض الروابط الثابتة في الأسفل */
             }
             
             .header-top {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-            
-            .logo {
-                margin-bottom: 10px;
+                padding: 10px 0;
             }
             
             .logo h1 {
@@ -530,112 +504,15 @@
             }
             
             .quick-links {
-                margin: 10px 0;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                margin-right: 0;
+                display: none; /* إخفاء الروابط في الهيدر للهواتف */
             }
             
-            .quick-links a {
-                font-size: 14px;
-                padding: 6px 10px;
-            }
-            
-            .header-search {
-                margin: 10px 0;
-                order: 3;
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .header-search.active input {
-                width: 80%;
-            }
-            
-            .hero {
-                height: 250px;
-            }
-            
-            .hero-content {
-                right: 20px;
-                bottom: 20px;
-                left: 20px;
-            }
-            
-            .hero-content h2 {
-                font-size: 24px;
-            }
-            
-            .hero-content p {
-                font-size: 16px;
-            }
-            
-            .header-left {
-                top: 100px;
-            }
-            
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 20px;
-            }
-            
-            .card-img {
-                height: 160px;
-            }
-            
-            .card-content {
-                padding: 15px;
-            }
-            
-            .card-title {
-                font-size: 16px;
-            }
-            
-            .section-title {
-                font-size: 22px;
-            }
-            
-            .breaking-news-content {
-                flex-direction: column;
-                align-items: flex-start;
+            .header-controls {
                 gap: 10px;
             }
             
-            .breaking-label {
-                margin-left: 0;
-            }
-            
-            .sidebar {
-                width: 280px;
-            }
-            
             .header-search.active input {
-                width: 90%;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            body {
-                padding-top: 140px;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .quick-links {
-                display: flex;
-                gap: 10px;
-            }
-            
-            .quick-links a {
-                font-size: 13px;
-                padding: 5px 8px;
+                width: 150px;
             }
             
             .hero {
@@ -643,13 +520,13 @@
             }
             
             .hero-content {
-                bottom: 15px;
-                right: 15px;
-                left: 15px;
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
             }
             
             .hero-content h2 {
-                font-size: 20px;
+                font-size: 22px;
             }
             
             .hero-content p {
@@ -662,91 +539,52 @@
                 font-size: 14px;
             }
             
-            .header-left {
-                top: 110px;
-                left: 15px;
-            }
-            
-            .sidebar-toggle {
-                left: 180px;
-                font-size: 16px;
-            }
-            
-            .header-search {
-                margin-right: 10px;
-            }
-            
-            .card-img {
-                height: 140px;
-            }
-            
-            .card-content {
-                padding: 12px;
-            }
-            
-            .card-title {
-                font-size: 15px;
-            }
-            
-            .card-meta {
-                font-size: 12px;
-            }
-            
-            .section-title {
-                font-size: 20px;
-            }
-            
-            .breaking-news {
-                padding: 8px 0;
-            }
-            
-            .breaking-news p {
-                font-size: 14px;
+            .mobile-links {
+                display: block;
             }
         }
         
-        @media (max-width: 400px) {
+        @media (max-width: 576px) {
             .logo h1 {
                 font-size: 22px;
             }
             
-            .quick-links a {
-                font-size: 12px;
-                padding: 4px 6px;
+            .header-search.active input {
+                width: 120px;
             }
             
             .hero-content h2 {
-                font-size: 18px;
+                font-size: 20px;
             }
             
-            .hero-content p {
-                font-size: 13px;
-            }
-            
-            .sidebar {
-                width: 260px;
-            }
-            
-            .header-left {
-                left: 10px;
-            }
-            
-            .sidebar-toggle {
-                left: 160px;
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- زر القائمة الجانبية وزر البحث معاً -->
-    <div class="header-left">
-        <!-- حقل البحث المضاف -->
-        <div class="header-search">
-            <input type="text" placeholder="ابحث عن أخبار أو فرق...">
-            <button class="search-toggle" type="button"><i class="fas fa-search"></i></button>
+    <!-- الهيدر -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>Sport<span>inx</span></h1>
+                </div>
+                
+                <div class="header-controls">
+                    <!-- البحث في الهيدر -->
+                    <div class="header-search">
+                        <input type="text" placeholder="ابحث عن أخبار أو فرق...">
+                        <button class="search-toggle" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                    <!-- زر القائمة الجانبية -->
+                    <button class="sidebar-toggle">☰</button>
+                </div>
+            </div>
         </div>
-        <button class="sidebar-toggle">☰</button>
-    </div>
+    </header>
 
     <!-- القائمة الجانبية -->
     <div class="sidebar">
@@ -755,6 +593,16 @@
             <p>القائمة الرئيسية</p>
         </div>
         <div class="sidebar-menu">
+            <h3>الصفحات</h3>
+            <ul class="sidebar-links">
+                <li>
+                    <a href="#">
+                        <i class="fas fa-home"></i>
+                        الرئيسية
+                    </a>
+                </li>
+            </ul>
+            
             <h3>الدوريات</h3>
             <ul class="sidebar-links">
                 <!-- الدوري الإنجليزي الممتاز (Premier League) -->
@@ -842,23 +690,6 @@
     
     <!-- طبقة التعتيم -->
     <div class="overlay"></div>
-
-    <!-- الهيدر -->
-    <header>
-        <div class="container">
-            <div class="header-top">
-                <div class="logo">
-                    <h1>Sport<span>inx</span></h1>
-                </div>
-                <div class="quick-links">
-                    <a href="#"><i class="fas fa-calendar-alt"></i> مواعيد المباريات</a>
-                    <a href="#"><i class="fas fa-trophy"></i> الترتيب</a>
-                    <a href="#"><i class="fas fa-futbol"></i> الهدافين</a>
-                    <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA="><i class="fas fa-video"></i> البث المباشر</a>
-                </div>
-            </div>
-        </div>
-    </header>
 
     <!-- البانر الرئيسي -->
     <section class="hero">
@@ -1030,6 +861,28 @@
             </div>
         </div>
     </footer>
+
+    <!-- روابط الهاتف في الأسفل -->
+    <div class="mobile-links">
+        <div class="mobile-links-container">
+            <a href="#" class="mobile-link">
+                <i class="fas fa-calendar-alt"></i>
+                <span>مواعيد المباريات</span>
+            </a>
+            <a href="#" class="mobile-link">
+                <i class="fas fa-trophy"></i>
+                <span>الترتيب</span>
+            </a>
+            <a href="#" class="mobile-link">
+                <i class="fas fa-futbol"></i>
+                <span>الهدافين</span>
+            </a>
+            <a href="https://www.instagram.com/daily__kora_live?igsh=MTAzdHoweXBnZDdhMA=" class="mobile-link">
+                <i class="fas fa-video"></i>
+                <span>البث المباشر</span>
+            </a>
+        </div>
+    </div>
 
     <script>
         // JavaScript لتفعيل القائمة الجانبية
