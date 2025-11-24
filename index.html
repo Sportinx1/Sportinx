@@ -152,6 +152,15 @@
             padding: 8px;
             transition: all 0.3s ease;
             margin-right: 10px;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        /* إخفاء زر القائمة الجانبية عند تفعيل البحث */
+        .header-search.active ~ .sidebar-toggle {
+            opacity: 0;
+            visibility: hidden;
         }
         
         .header-controls {
