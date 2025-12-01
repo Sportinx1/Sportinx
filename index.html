@@ -31,7 +31,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+    
     <style>
         /* التصميم العام */
         * {
@@ -122,7 +122,7 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* البحث في الهيدر */
+        /* البحث في الهيدر للحاسوب */
         .header-search {
             display: flex;
             align-items: center;
@@ -134,19 +134,12 @@
             border: 1px solid #ddd;
             border-radius: 20px;
             outline: none;
-            width: 0;
-            opacity: 0;
-            transition: all 0.3s ease;
-            background-color: #f8f9fa;
-        }
-        
-        .header-search.active input {
             width: 200px;
-            opacity: 1;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
         }
         
         .header-search input:focus {
-            width: 200px;
             border-color: var(--primary);
             box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
         }
@@ -159,15 +152,60 @@
             font-size: 18px;
             padding: 8px;
             transition: all 0.3s ease;
-        }
-        
-        .header-search.active .search-toggle {
-            opacity: 0;
-            visibility: hidden;
+            display: none; /* مخفي في الحاسوب */
         }
         
         .search-toggle:hover {
             color: var(--primary);
+        }
+        
+        /* البحث المتنقل للهواتف */
+        .mobile-search {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: white;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-search.active {
+            display: flex;
+        }
+        
+        .mobile-search-container {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+            background-color: #f8f9fa;
+        }
+        
+        .mobile-search-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .mobile-search-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+            padding: 5px;
         }
         
         .sidebar-toggle {
@@ -179,15 +217,6 @@
             padding: 8px;
             transition: all 0.3s ease;
             margin-right: 10px;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        
-        /* إخفاء زر القائمة الجانبية عند تفعيل البحث */
-        .header-search.active ~ .sidebar-toggle {
-            opacity: 0;
-            visibility: hidden;
         }
         
         .header-controls {
@@ -196,6 +225,7 @@
             gap: 15px;
         }
         
+        /* القائمة الجانبية - تصميم الحاسوب (الافتراضي) */
         .sidebar {
             position: fixed;
             top: 0;
@@ -221,6 +251,31 @@
             border-bottom: 1px solid #eee;
             margin-bottom: 20px;
             text-align: center;
+            position: relative;
+        }
+        
+        /* زر إغلاق القائمة الجانبية */
+        .sidebar-close {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-close:hover {
+            background-color: #f0f0f0;
+            transform: rotate(90deg);
         }
         
         .sidebar-header h2 {
@@ -231,6 +286,7 @@
             background-clip: text;
             color: transparent;
             font-size: 24px;
+            padding-left: 30px; /* تعويض مكان زر الإغلاق */
         }
         
         .sidebar-header p {
@@ -524,7 +580,7 @@
             font-size: 18px;
         }
         
-        /* التجاوب مع الشاشات المختلفة - تحسينات للهواتف فقط */
+        /* تصميم الهواتف */
         @media (max-width: 768px) {
             body {
                 padding-top: 80px;
@@ -543,12 +599,17 @@
                 display: none; /* إخفاء الروابط في الهيدر للهواتف */
             }
             
-            .header-controls {
-                gap: 10px;
+            /* البحث في الحاسوب - إخفاء الحقل وإظهار الأيقونة فقط */
+            .header-search input {
+                display: none; /* إخفاء حقل البحث في الهيدر للهواتف */
             }
             
-            .header-search.active input {
-                width: 150px;
+            .search-toggle {
+                display: block; /* إظهار أيقونة البحث في الهواتف */
+            }
+            
+            .header-controls {
+                gap: 10px;
             }
             
             .hero {
@@ -578,15 +639,45 @@
             .mobile-links {
                 display: block;
             }
+            
+            /* تعديل القائمة الجانبية للهواتف */
+            .sidebar {
+                width: 100%; /* تغطية كاملة للشاشة */
+                left: -100%; /* تتحرك بالكامل خارج الشاشة */
+                border-radius: 0; /* إزالة أي حواف مستديرة */
+                box-shadow: none; /* إزالة الظل لتبدو كجزء من الصفحة */
+            }
+            
+            .sidebar.active {
+                left: 0; /* تظهر لتغطي الشاشة بالكامل */
+            }
+            
+            /* تحسين ظهور القائمة في الهواتف */
+            .sidebar-header {
+                padding-top: 10px;
+            }
+            
+            .sidebar-menu {
+                padding: 10px 0;
+            }
+            
+            /* زر الإغلاق في الهواتف */
+            .sidebar-close {
+                left: 20px;
+                top: 20px;
+                font-size: 42px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .sidebar-header h2 {
+                padding-left: 01px; /* تعويض مكان زر الإغلاق في الهواتف */
+            }
         }
         
         @media (max-width: 576px) {
             .logo h1 {
                 font-size: 22px;
-            }
-            
-            .header-search.active input {
-                width: 120px;
             }
             
             .hero-content h2 {
@@ -617,7 +708,7 @@
                 </div>
                 
                 <div class="header-controls">
-                    <!-- البحث في الهيدر -->
+                    <!-- البحث في الهيدر (للحاسوب فقط) -->
                     <div class="header-search">
                         <input type="text" placeholder="ابحث عن أخبار أو فرق...">
                         <button class="search-toggle" type="button"><i class="fas fa-search"></i></button>
@@ -630,9 +721,19 @@
         </div>
     </header>
 
+    <!-- البحث المتنقل للهواتف -->
+    <div class="mobile-search">
+        <div class="mobile-search-container">
+            <input type="text" class="mobile-search-input" placeholder="ابحث عن أخبار أو فرق...">
+            <button class="mobile-search-close" type="button">✕</button>
+        </div>
+    </div>
+
     <!-- القائمة الجانبية -->
     <div class="sidebar">
         <div class="sidebar-header">
+            <!-- زر إغلاق القائمة الجانبية -->
+            <button class="sidebar-close" aria-label="إغلاق القائمة">×</button>
             <h2>Sportinx</h2>
             <p>القائمة الرئيسية</p>
         </div>
@@ -929,12 +1030,21 @@
             const sidebarToggle = document.querySelector('.sidebar-toggle');
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.querySelector('.overlay');
+            const sidebarClose = document.querySelector('.sidebar-close');
             
+            // فتح القائمة الجانبية
             sidebarToggle.addEventListener('click', function() {
                 sidebar.classList.toggle('active');
                 overlay.classList.toggle('active');
             });
             
+            // إغلاق القائمة بالضغط على زر الإغلاق
+            sidebarClose.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            // إغلاق القائمة بالضغط على طبقة التعتيم
             overlay.addEventListener('click', function() {
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
@@ -948,33 +1058,31 @@
                 }
             });
             
-            // تفعيل/إلغاء تفعيل البحث
+            // البحث المتنقل للهواتف
             const searchToggle = document.querySelector('.search-toggle');
-            const headerSearch = document.querySelector('.header-search');
+            const mobileSearch = document.querySelector('.mobile-search');
+            const mobileSearchClose = document.querySelector('.mobile-search-close');
             
-            searchToggle.addEventListener('click', function() {
-                headerSearch.classList.toggle('active');
-                
-                if (headerSearch.classList.contains('active')) {
-                    // إذا تم تفعيل البحث، ركز على حقل الإدخال
-                    const searchInput = headerSearch.querySelector('input');
-                    searchInput.focus();
-                }
-            });
+            if (searchToggle) {
+                searchToggle.addEventListener('click', function() {
+                    mobileSearch.classList.toggle('active');
+                    if (mobileSearch.classList.contains('active')) {
+                        const searchInput = mobileSearch.querySelector('.mobile-search-input');
+                        searchInput.focus();
+                    }
+                });
+            }
             
-            // إغلاق البحث عند الضغط على Escape
+            if (mobileSearchClose) {
+                mobileSearchClose.addEventListener('click', function() {
+                    mobileSearch.classList.remove('active');
+                });
+            }
+            
+            // إغلاق البحث المتنقل عند الضغط على Escape
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && headerSearch.classList.contains('active')) {
-                    headerSearch.classList.remove('active');
-                }
-            });
-            
-            // إغلاق البحث عند النقر خارج منطقة البحث
-            document.addEventListener('click', function(e) {
-                if (headerSearch.classList.contains('active') && 
-                    !headerSearch.contains(e.target) && 
-                    e.target !== searchToggle) {
-                    headerSearch.classList.remove('active');
+                if (e.key === 'Escape' && mobileSearch.classList.contains('active')) {
+                    mobileSearch.classList.remove('active');
                 }
             });
         });
