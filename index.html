@@ -122,41 +122,113 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* البحث في الهيدر للحاسوب */
-        .header-search {
+        /* شريط البحث المحسن للكمبيوتر */
+        .header-search-container {
+            position: relative;
             display: flex;
             align-items: center;
-            position: relative;
         }
-        
-        .header-search input {
-            padding: 8px 40px 8px 15px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-            width: 200px;
-            background-color: #f8f9fa;
-            transition: all 0.3s ease;
-        }
-        
-        .header-search input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
-        }
-        
-        .search-toggle {
+
+        /* أيقونة البحث */
+        .search-icon {
             background: none;
             border: none;
             color: #0d5bb9;
-            cursor: pointer;
             font-size: 18px;
+            cursor: pointer;
             padding: 8px;
             transition: all 0.3s ease;
-            display: none; /* مخفي في الحاسوب */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .search-icon:hover {
+            background-color: rgba(13, 91, 185, 0.1);
+        }
+
+        /* حقل البحث */
+        .header-search-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 30px;
+            padding: 5px 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 400px; /* حجم مناسب للكمبيوتر */
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* عندما يكون حقل البحث ظاهرًا */
+        .header-search-box.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            background: transparent;
+            direction: rtl;
+        }
+
+        .search-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 10px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .search-close:hover {
+            color: var(--primary);
+        }
+
+        /* إخفاء القائمة عند تفعيل البحث */
+        .sidebar-toggle.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(20px);
+            pointer-events: none;
+        }
+
+        /* البحث القديم - مخفي */
+        .header-search {
+            display: none;
         }
         
-        .search-toggle:hover {
-            color: var(--primary);
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #0d5bb9;
+            cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
         
         /* البحث المتنقل للهواتف */
@@ -208,23 +280,6 @@
             padding: 5px;
         }
         
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            font-size: 20px;
-            color: #0d5bb9;
-            cursor: pointer;
-            padding: 8px;
-            transition: all 0.3s ease;
-            margin-right: 10px;
-        }
-        
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
         /* القائمة الجانبية - تصميم الحاسوب (الافتراضي) */
         .sidebar {
             position: fixed;
@@ -261,7 +316,7 @@
             top: 15px;
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 40px;
             color: #333;
             cursor: pointer;
             width: 36px;
@@ -599,13 +654,27 @@
                 display: none; /* إخفاء الروابط في الهيدر للهواتف */
             }
             
-            /* البحث في الحاسوب - إخفاء الحقل وإظهار الأيقونة فقط */
-            .header-search input {
-                display: none; /* إخفاء حقل البحث في الهيدر للهواتف */
+            /* إخفاء البحث المحسن في الهواتف */
+            .header-search-container {
+                display: none;
+            }
+            
+            /* البحث في الهواتف - إظهار أيقونة البحث القديمة */
+            .header-search {
+                display: flex;
+                align-items: center;
+                position: relative;
             }
             
             .search-toggle {
                 display: block; /* إظهار أيقونة البحث في الهواتف */
+                background: none;
+                border: none;
+                color: #0d5bb9;
+                cursor: pointer;
+                font-size: 18px;
+                padding: 8px;
+                transition: all 0.3s ease;
             }
             
             .header-controls {
@@ -708,14 +777,27 @@
                 </div>
                 
                 <div class="header-controls">
-                    <!-- البحث في الهيدر (للحاسوب فقط) -->
+                    <!-- شريط البحث المحسن للكمبيوتر -->
+                    <div class="header-search-container">
+                        <!-- أيقونة البحث (تظهر دائمًا على الكمبيوتر) -->
+                        <button class="search-icon" id="searchToggle">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        
+                        <!-- حقل البحث (يظهر عند النقر على الأيقونة) -->
+                        <div class="header-search-box" id="searchBox">
+                            <input type="text" placeholder="ابحث عن أخبار أو فرق..." class="search-input">
+                            <button class="search-close" id="closeSearch">✕</button>
+                        </div>
+                    </div>
+                    
+                    <!-- البحث القديم للهواتف (مخفي في الكمبيوتر) -->
                     <div class="header-search">
-                        <input type="text" placeholder="ابحث عن أخبار أو فرق...">
                         <button class="search-toggle" type="button"><i class="fas fa-search"></i></button>
                     </div>
                     
                     <!-- زر القائمة الجانبية -->
-                    <button class="sidebar-toggle">☰</button>
+                    <button class="sidebar-toggle" id="menuToggle">☰</button>
                 </div>
             </div>
         </div>
@@ -1025,30 +1107,97 @@
     </div>
 
     <script>
-        // JavaScript لتفعيل القائمة الجانبية
+        // البحث المحسن للكمبيوتر
         document.addEventListener('DOMContentLoaded', function() {
+            const searchToggle = document.getElementById('searchToggle');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchBox = document.getElementById('searchBox');
+            const menuToggle = document.getElementById('menuToggle');
+            const searchInput = document.querySelector('.search-input');
+            
+            // عند النقر على أيقونة البحث
+            if (searchToggle) {
+                searchToggle.addEventListener('click', function(e) {
+                    e.stopPropagation(); // منع الانتشار
+                    
+                    // إظهار حقل البحث
+                    searchBox.classList.add('active');
+                    
+                    // إخفاء زر القائمة الجانبية
+                    menuToggle.classList.add('hidden');
+                    
+                    // إخفاء أيقونة البحث
+                    searchToggle.style.opacity = '0';
+                    searchToggle.style.pointerEvents = 'none';
+                    
+                    // تركيز المؤشر على حقل الإدخال
+                    setTimeout(() => {
+                        searchInput.focus();
+                    }, 300);
+                });
+            }
+            
+            // عند النقر على زر الإغلاق
+            if (closeSearch) {
+                closeSearch.addEventListener('click', function() {
+                    closeSearchPanel();
+                });
+            }
+            
+            // إغلاق البحث عند الضغط على Esc
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && searchBox.classList.contains('active')) {
+                    closeSearchPanel();
+                }
+            });
+            
+            // إغلاق البحث عند النقر خارج المنطقة
+            document.addEventListener('click', function(e) {
+                if (!searchBox.contains(e.target) && 
+                    !searchToggle.contains(e.target) && 
+                    searchBox.classList.contains('active')) {
+                    closeSearchPanel();
+                }
+            });
+            
+            // دالة إغلاق لوحة البحث
+            function closeSearchPanel() {
+                searchBox.classList.remove('active');
+                menuToggle.classList.remove('hidden');
+                searchToggle.style.opacity = '1';
+                searchToggle.style.pointerEvents = 'auto';
+                searchInput.value = ''; // مسح البحث
+            }
+            
+            // باقي كود القائمة الجانبية...
             const sidebarToggle = document.querySelector('.sidebar-toggle');
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.querySelector('.overlay');
             const sidebarClose = document.querySelector('.sidebar-close');
             
             // فتح القائمة الجانبية
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-            });
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                });
+            }
             
             // إغلاق القائمة بالضغط على زر الإغلاق
-            sidebarClose.addEventListener('click', function() {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            });
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
             
             // إغلاق القائمة بالضغط على طبقة التعتيم
-            overlay.addEventListener('click', function() {
-                sidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            });
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
             
             // إغلاق القائمة بالضغط على زر Escape
             document.addEventListener('keydown', function(e) {
@@ -1059,16 +1208,16 @@
             });
             
             // البحث المتنقل للهواتف
-            const searchToggle = document.querySelector('.search-toggle');
+            const mobileSearchToggle = document.querySelector('.search-toggle');
             const mobileSearch = document.querySelector('.mobile-search');
             const mobileSearchClose = document.querySelector('.mobile-search-close');
             
-            if (searchToggle) {
-                searchToggle.addEventListener('click', function() {
+            if (mobileSearchToggle) {
+                mobileSearchToggle.addEventListener('click', function() {
                     mobileSearch.classList.toggle('active');
                     if (mobileSearch.classList.contains('active')) {
-                        const searchInput = mobileSearch.querySelector('.mobile-search-input');
-                        searchInput.focus();
+                        const mobileSearchInput = mobileSearch.querySelector('.mobile-search-input');
+                        mobileSearchInput.focus();
                     }
                 });
             }
@@ -1078,13 +1227,6 @@
                     mobileSearch.classList.remove('active');
                 });
             }
-            
-            // إغلاق البحث المتنقل عند الضغط على Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && mobileSearch.classList.contains('active')) {
-                    mobileSearch.classList.remove('active');
-                }
-            });
         });
     </script>
 </body>

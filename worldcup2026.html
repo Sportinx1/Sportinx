@@ -30,7 +30,7 @@
             line-height: 1.6;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
             min-height: 100vh;
-            padding-top: 80px; /* تعويض الهيدر الثابت */
+            padding-top: 100px; /* تعويض الهيدر الثابت */
         }
         
         .container {
@@ -40,9 +40,9 @@
             padding: 20px;
         }
         
-        /* ----------------------------- الهيدر ----------------------------- */
+        /* ----------------------------- الهيدر الجديد ----------------------------- */
         header {
-            background: #1a2a6c;
+            background: white;
             color: white;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: fixed;
@@ -51,17 +51,23 @@
             width: 100%;
             z-index: 900;
         }
-
+        
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
         }
         
         .logo h1 {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
+            margin-left: 10px;
             background: linear-gradient(90deg, #0f0d0d, #1a73e8);
             -webkit-background-clip: text;
             background-clip: text;
@@ -71,25 +77,341 @@
         .logo span {
             color: var(--primary);
         }
-
-        .social-links a {
-            color: #0d5bb9;
-            margin: 0 10px;
-            font-size: 18px;
-            transition: .3s;
-            display: inline-block;
-        }
-
-        .social-links a:hover:nth-child(1) { color: #1877F2; }
-        .social-links a:hover:nth-child(2) { color: #000; }
-        .social-links a:hover:nth-child(3) {
-            background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .social-links a:hover:nth-child(4) { color: #FF0000; }
         
+        .quick-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+        }
+        
+        .quick-links a {
+            color: #0d5bb9;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .quick-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* شريط البحث المحسن للكمبيوتر */
+        .header-search-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* أيقونة البحث */
+        .search-icon {
+            background: none;
+            border: none;
+            color: #0d5bb9;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .search-icon:hover {
+            background-color: rgba(13, 91, 185, 0.1);
+        }
+
+        /* حقل البحث */
+        .header-search-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 30px;
+            padding: 5px 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            width: 400px; /* حجم مناسب للكمبيوتر */
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* عندما يكون حقل البحث ظاهرًا */
+        .header-search-box.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            background: transparent;
+            direction: rtl;
+        }
+
+        .search-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 5px;
+            margin-left: 10px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .search-close:hover {
+            color: var(--primary);
+        }
+
+        /* إخفاء القائمة عند تفعيل البحث */
+        .sidebar-toggle.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(20px);
+            pointer-events: none;
+        }
+        
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #0d5bb9;
+            cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        /* البحث المتنقل للهواتف */
+        .mobile-search {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: white;
+            z-index: 999;
+            display: none;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-search.active {
+            display: flex;
+        }
+        
+        .mobile-search-container {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 16px;
+            background-color: #f8f9fa;
+        }
+        
+        .mobile-search-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .mobile-search-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* القائمة الجانبية - تصميم الحاسوب (الافتراضي) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background: #fff;
+            z-index: 9999;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        /* زر إغلاق القائمة الجانبية */
+        .sidebar-close {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            background: none;
+            border: none;
+            font-size: 40px;
+            color: #333;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-close:hover {
+            background-color: #f0f0f0;
+            transform: rotate(90deg);
+        }
+        
+        .sidebar-header h2 {
+            color: var(--dark);
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #140302, #00000a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 24px;
+            padding-left: 30px; /* تعويض مكان زر الإغلاق */
+        }
+        
+        .sidebar-header p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .sidebar-menu {
+            flex: 1;
+        }
+        
+        .sidebar-menu h3 {
+            color: var(--dark);
+            margin: 20px 0 10px;
+            font-size: 18px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .sidebar-links {
+            list-style: none;
+        }
+        
+        .sidebar-links li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-links a {
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .sidebar-links a:hover {
+            background-color: #f0f7ff;
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* أيقونات الدوري */
+        .league-icon {
+            width: 22px;
+            height: 22px;
+            margin-left: 8px;
+        }
+        
+        /* روابط الهاتف في الأسفل */
+        .mobile-links {
+            display: none;
+            background: white;
+            padding: 15px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 800;
+        }
+        
+        .mobile-links-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .mobile-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #0d5bb9;
+            font-size: 12px;
+            gap: 5px;
+        }
+        
+        .mobile-link i {
+            font-size: 18px;
+        }
+
         /* تنسيقات المقال */
         .article-container {
             width: 100%;
@@ -322,16 +644,93 @@
             color: white;
         }
         
-        /* تحسينات للهواتف */
+        /* تصميم الهواتف */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            body {
+                padding-top: 80px;
+                padding-bottom: 70px; /* تعويض الروابط الثابتة في الأسفل */
             }
             
             .header-top {
-                flex-direction: column;
+                padding: 10px 0;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .quick-links {
+                display: none; /* إخفاء الروابط في الهيدر للهواتف */
+            }
+            
+            /* إخفاء البحث المحسن في الهواتف */
+            .header-search-container {
+                display: none;
+            }
+            
+            /* البحث في الهواتف - إظهار أيقونة البحث القديمة */
+            .header-search {
+                display: flex;
+                align-items: center;
+                position: relative;
+            }
+            
+            .search-toggle {
+                display: block; /* إظهار أيقونة البحث في الهواتف */
+                background: none;
+                border: none;
+                color: #0d5bb9;
+                cursor: pointer;
+                font-size: 18px;
+                padding: 8px;
+                transition: all 0.3s ease;
+            }
+            
+            .header-controls {
                 gap: 10px;
-                text-align: center;
+            }
+            
+            .mobile-links {
+                display: block;
+            }
+            
+            /* تعديل القائمة الجانبية للهواتف */
+            .sidebar {
+                width: 100%; /* تغطية كاملة للشاشة */
+                left: -100%; /* تتحرك بالكامل خارج الشاشة */
+                border-radius: 0; /* إزالة أي حواف مستديرة */
+                box-shadow: none; /* إزالة الظل لتبدو كجزء من الصفحة */
+            }
+            
+            .sidebar.active {
+                left: 0; /* تظهر لتغطي الشاشة بالكامل */
+            }
+            
+            /* تحسين ظهور القائمة في الهواتف */
+            .sidebar-header {
+                padding-top: 10px;
+            }
+            
+            .sidebar-menu {
+                padding: 10px 0;
+            }
+            
+            /* زر الإغلاق في الهواتف */
+            .sidebar-close {
+                left: 20px;
+                top: 20px;
+                font-size: 42px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .sidebar-header h2 {
+                padding-left: 01px; /* تعويض مكان زر الإغلاق في الهواتف */
+            }
+            
+            /* تعديلات المادة */
+            .container {
+                padding: 10px;
             }
             
             .article-content {
@@ -372,7 +771,11 @@
             }
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
+            .logo h1 {
+                font-size: 22px;
+            }
+            
             .article-content {
                 padding: 15px;
             }
@@ -416,16 +819,133 @@
                 <div class="logo">
                     <h1>Sport<span>inx</span></h1>
                 </div>
-
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                
+                <!-- الروابط السريعة - تظهر على الحاسوب فقط -->
+                <div class="quick-links">
+                    <a href="#"><i class="fas fa-calendar-alt"></i> مواعيد المباريات</a>
+                    <a href="#"><i class="fas fa-trophy"></i> الترتيب</a>
+                    <a href="#"><i class="fas fa-futbol"></i> الهدافين</a>
+                    <a href="https://www.instagram.com/sportinx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fas fa-video"></i> البث المباشر</a>
+                </div>
+                
+                <div class="header-controls">
+                    <!-- شريط البحث المحسن للكمبيوتر -->
+                    <div class="header-search-container">
+                        <!-- أيقونة البحث (تظهر دائمًا على الكمبيوتر) -->
+                        <button class="search-icon" id="searchToggle">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        
+                        <!-- حقل البحث (يظهر عند النقر على الأيقونة) -->
+                        <div class="header-search-box" id="searchBox">
+                            <input type="text" placeholder="ابحث عن أخبار أو فرق..." class="search-input">
+                            <button class="search-close" id="closeSearch">✕</button>
+                        </div>
+                    </div>
+                    
+                    <!-- البحث القديم للهواتف (مخفي في الكمبيوتر) -->
+                    <div class="header-search">
+                        <button class="search-toggle" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                    
+                    <!-- زر القائمة الجانبية -->
+                    <button class="sidebar-toggle" id="menuToggle">☰</button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- البحث المتنقل للهواتف -->
+    <div class="mobile-search">
+        <div class="mobile-search-container">
+            <input type="text" class="mobile-search-input" placeholder="ابحث عن أخبار أو فرق...">
+            <button class="mobile-search-close" type="button">✕</button>
+        </div>
+    </div>
+
+    <!-- القائمة الجانبية -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <!-- زر إغلاق القائمة الجانبية -->
+            <button class="sidebar-close" aria-label="إغلاق القائمة">×</button>
+            <h2>Sportinx</h2>
+            <p>القائمة الرئيسية</p>
+        </div>
+        <div class="sidebar-menu">
+            <h3>الدوريات</h3>
+            <ul class="sidebar-links">
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <path d="M20 10c10-12 30-5 30 10s-15 25-25 25S5 35 5 25s5-12 15-15z" stroke-width="4" fill="none" stroke="currentColor"/>
+                            <circle cx="32" cy="45" r="8" stroke="currentColor" stroke-width="4" fill="none"/>
+                        </svg>
+                        الدوري الإنجليزي
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <path d="M32 12v10M32 52V42M12 32h10M52 32H42M18 18l8 8M46 46l-8-8M46 18l-8 8M18 46l8-8"
+                                  stroke="currentColor" stroke-width="4"/>
+                        </svg>
+                        الدوري الإسباني
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <polygon points="32 6 52 18 52 46 32 58 12 46 12 18" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <polygon points="32 14 44 22 44 42 32 50 20 42 20 22" fill="none" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        الدوري الإيطالي
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <rect x="8" y="20" width="48" height="28" rx="4" ry="4" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <path d="M20 42l6-10-6-10 18 10-18 10z" stroke="currentColor" stroke-width="4" fill="none"/>
+                        </svg>
+                        الدوري الألماني
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <circle cx="32" cy="32" r="18" fill="none" stroke="currentColor" stroke-width="4"/>
+                            <circle cx="32" cy="32" r="6" fill="none" stroke="currentColor" stroke-width="4"/>
+                        </svg>
+                        الدوري الفرنسي
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <circle cx="32" cy="32" r="22" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <path d="M32 12l6 10h12l-8 6 4 10-10-6-10 6 4-10-8-6h12z"
+                                  fill="none" stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        دوري الأبطال
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <svg viewBox="0 0 64 64" class="league-icon">
+                            <circle cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="3"/>
+                            <path d="M32 12v8M32 44v8M12 32h8M44 32h8M18 18l6 6M40 40l6 6M18 46l6-6M40 24l6-6"
+                                  stroke="currentColor" stroke-width="3"/>
+                        </svg>
+                        الدوري السعودي
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- طبقة التعتيم -->
+    <div class="overlay"></div>
 
     <!-- المحتوى الرئيسي -->
     <main class="container">
@@ -704,28 +1224,157 @@
         </div>
     </footer>
 
-    <script>
-        // تحديث السنة تلقائياً
-        document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- روابط الهاتف في الأسفل -->
+    <div class="mobile-links">
+        <div class="mobile-links-container">
+            <a href="index.html" class="mobile-link">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#" class="mobile-link">
+                <i class="fas fa-calendar-alt"></i>
+                <span>مواعيد المباريات</span>
+            </a>
+            <a href="#" class="mobile-link">
+                <i class="fas fa-trophy"></i>
+                <span>الترتيب</span>
+            </a>
+            <a href="#" class="mobile-link">
+                <i class="fas fa-futbol"></i>
+                <span>الهدافين</span>
+            </a>
+            <a href="https://www.instagram.com/sportinx?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="mobile-link">
+                <i class="fas fa-video"></i>
+                <span>البث المباشر</span>
+            </a>
+        </div>
+    </div>
 
-        // إضافة تأثيرات تفاعلية بسيطة
+    <script>
+        // البحث المحسن للكمبيوتر
         document.addEventListener('DOMContentLoaded', function() {
-            // تأثير التمرير السلس للروابط الداخلية
-            const links = document.querySelectorAll('a[href^="#"]');
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
+            const searchToggle = document.getElementById('searchToggle');
+            const closeSearch = document.getElementById('closeSearch');
+            const searchBox = document.getElementById('searchBox');
+            const menuToggle = document.getElementById('menuToggle');
+            const searchInput = document.querySelector('.search-input');
+            
+            // عند النقر على أيقونة البحث
+            if (searchToggle) {
+                searchToggle.addEventListener('click', function(e) {
+                    e.stopPropagation(); // منع الانتشار
+                    
+                    // إظهار حقل البحث
+                    searchBox.classList.add('active');
+                    
+                    // إخفاء زر القائمة الجانبية
+                    menuToggle.classList.add('hidden');
+                    
+                    // إخفاء أيقونة البحث
+                    searchToggle.style.opacity = '0';
+                    searchToggle.style.pointerEvents = 'none';
+                    
+                    // تركيز المؤشر على حقل الإدخال
+                    setTimeout(() => {
+                        searchInput.focus();
+                    }, 300);
                 });
+            }
+            
+            // عند النقر على زر الإغلاق
+            if (closeSearch) {
+                closeSearch.addEventListener('click', function() {
+                    closeSearchPanel();
+                });
+            }
+            
+            // إغلاق البحث عند الضغط على Esc
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && searchBox.classList.contains('active')) {
+                    closeSearchPanel();
+                }
             });
             
+            // إغلاق البحث عند النقر خارج المنطقة
+            document.addEventListener('click', function(e) {
+                if (!searchBox.contains(e.target) && 
+                    !searchToggle.contains(e.target) && 
+                    searchBox.classList.contains('active')) {
+                    closeSearchPanel();
+                }
+            });
+            
+            // دالة إغلاق لوحة البحث
+            function closeSearchPanel() {
+                searchBox.classList.remove('active');
+                menuToggle.classList.remove('hidden');
+                searchToggle.style.opacity = '1';
+                searchToggle.style.pointerEvents = 'auto';
+                searchInput.value = ''; // مسح البحث
+            }
+            
+            // باقي كود القائمة الجانبية...
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const sidebarClose = document.querySelector('.sidebar-close');
+            
+            // فتح القائمة الجانبية
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                });
+            }
+            
+            // إغلاق القائمة بالضغط على زر الإغلاق
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+            
+            // إغلاق القائمة بالضغط على طبقة التعتيم
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+            
+            // إغلاق القائمة بالضغط على زر Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+            
+            // البحث المتنقل للهواتف
+            const mobileSearchToggle = document.querySelector('.search-toggle');
+            const mobileSearch = document.querySelector('.mobile-search');
+            const mobileSearchClose = document.querySelector('.mobile-search-close');
+            
+            if (mobileSearchToggle) {
+                mobileSearchToggle.addEventListener('click', function() {
+                    mobileSearch.classList.toggle('active');
+                    if (mobileSearch.classList.contains('active')) {
+                        const mobileSearchInput = mobileSearch.querySelector('.mobile-search-input');
+                        mobileSearchInput.focus();
+                    }
+                });
+            }
+            
+            if (mobileSearchClose) {
+                mobileSearchClose.addEventListener('click', function() {
+                    mobileSearch.classList.remove('active');
+                });
+            }
+            
+            // تحديث السنة تلقائياً
+            document.getElementById('year').textContent = new Date().getFullYear();
+
             // تأثير الظهور التدريجي للعناصر
             const observerOptions = {
                 threshold: 0.1,
